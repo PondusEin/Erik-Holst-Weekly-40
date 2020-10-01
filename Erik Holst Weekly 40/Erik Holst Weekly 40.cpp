@@ -66,7 +66,6 @@ void task_1() {
 void task_2() {
 	system("cls");
 
-
 	std::vector <std::vector<int>> board{ {1,2,3,4,5,6,7,8,9,10},
 							  {11,12,13,14,15,16,17,18,19,20},
 							  {21,22,23,24,25,26,27,28,29,30},
@@ -85,12 +84,12 @@ void task_2() {
 		std::cout << std::endl;
 	}
 
-	if (_kbhit)
+	if (_kbhit())
 	{
 		do
 		{
 			std::cin.get(ch);
-			switch (_getch() == '\033')
+			switch (_getch())
 			{
 			case 'a':
 				break;
