@@ -118,27 +118,28 @@ void task_3() {
 	system("cls");
 
 	information arrayinfo[10];
-	for (int i = 0; i < 10; i++)
-	{
-		std::cout << "How many people would like to store? \nInput: ";
 
+	std::cout << "How many people would like to store? \nInput: ";
+	std::cin >> amount;
 
-			for (int i = 0; i < amount+1; i++)
+	for (int i = 1; i < amount+1; i++)
 			{
-				std::cout << "Enter person " << amount << " name: ";
+			system("cls");
+			std::cout << "Enter person " << i << " name: ";
 				
-				std::getline(std::cin, info[i].names);
-				std::cin.ignore(32676, '\n');
+			std::cin.ignore(32676, '\n');
+			std::getline(std::cin, info[i].names);
 
-				std::cout << "Enter person " << arrayinfo << " number: ";
-				std::cin >> info[i].phonenumber;
+			std::cout << "Enter person " << i << " number: ";
+			std::cin >> info[i].phonenumber;
 			}
 		system("cls");
 
 		std::cout << std::endl;
-	}
+	
 
-	(arrayinfo);
+
+	std::cout << arrayinfo->names;
 	std::cout << '\n' << "Press any button to return to main menu!";
 
 	char hello = _getch();
@@ -157,7 +158,7 @@ void task_4() {
 
 int main()
 {
-
+	// bool task to finish the "showthrough" of the weekly task
 	bool completed_task_1 = false;
 	bool completed_task_2 = false;
 	bool completed_task_3 = false;
@@ -175,7 +176,6 @@ int main()
 			system("cls");
 			std::cout << "Well done, you completed all the tasks!";
 			return (EXIT_SUCCESS);
-
 		}
 		else
 		{
