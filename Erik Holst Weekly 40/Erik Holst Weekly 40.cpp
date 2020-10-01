@@ -4,6 +4,20 @@
 #include <string>
 #include <limits>
 
+// task 1 global
+char lc[80];
+// task 2 global
+char ch;
+// task 3 global
+struct information
+{
+
+	std::string names;
+	long phonenumber;
+}info[10];
+
+int amount;
+// task 4 global
 
 
 
@@ -11,10 +25,7 @@ void task_1() {
 
 	system("cls");
 	// The char data type has a variable named lc (short for lowercase to see it easily). the string length is to make the for loop work
-	char lc[80];
 
-	//using an integer to understand the value of ascii program
-	int i;
 
 	std::cout << "Welcome to task 1. Please write anything you would like"
 		" and see it turn to capital letters." << std::endl;
@@ -45,66 +56,167 @@ void task_1() {
 
 	}
 	
-
-	std::cout << lc;
-
+	std::cout << lc << std::endl;
+	std::cout << '\n' << "Press any button to return to main menu!";
 
 	char hello=_getch();
 	system("cls");
 	return;
-
 }
 
 void task_2() {
+	system("cls");
 
+
+	std::vector <std::vector<int>> board{ {1,2,3,4,5,6,7,8,9,10},
+							  {11,12,13,14,15,16,17,18,19,20},
+							  {21,22,23,24,25,26,27,28,29,30},
+							  {31,32,33,34,35,36,37,38,39,40},
+							  {41,42,43,44,45,46,47,48,49,50},
+							  {51,52,53,54,55,56,57,58,59,60},
+							  {61,62,63,64,65,66,67,68,69,70},
+							  {71,72,73,74,75,76,77,78,79,80},
+							  {81,82,83,84,85,86,87,88,89,90},
+							  {91,92,93,94,95,96,97,98,99,100} };
+
+	for (int i = 0; i < board.size(); i++)
+	{
+		for (int j = 0; j < board.size(); j++)
+			std::cout << "|=|";
+		std::cout << std::endl;
+	}
+
+	if (_kbhit)
+	{
+		do
+		{
+			std::cin.get(ch);
+			switch (_getch() == '\033')
+			{
+			case 'a':
+				break;
+			case 's':
+				break;
+			case 'd':
+				break;
+			case 'w':
+				break;
+			default:
+				break;
+			}
+		} while (true);
+
+	}
+
+	std::cout << '\n' << "Press any button to return to main menu!";
+
+	char hello = _getch();
+	return;
 }
 
 void task_3() {
+	system("cls");
 
+	information arrayinfo[10];
+	for (int i = 0; i < 10; i++)
+	{
+		std::cout << "How many people would like to store? \nInput: ";
+
+
+			for (int i = 0; i < amount+1; i++)
+			{
+				std::cout << "Enter person " << amount << " name: ";
+				
+				std::getline(std::cin, info[i].names);
+				std::cin.ignore(32676, '\n');
+
+				std::cout << "Enter person " << arrayinfo << " number: ";
+				std::cin >> info[i].phonenumber;
+			}
+		system("cls");
+
+		std::cout << std::endl;
+	}
+
+	(arrayinfo);
+	std::cout << '\n' << "Press any button to return to main menu!";
+
+	char hello = _getch();
 }
 
 void task_4() {
+	system("cls");
 
+
+
+
+	std::cout << '\n' << "Press any button to return to main menu!";
+
+	char hello = _getch();
 }
 
 int main()
 {
+
+	bool completed_task_1 = false;
+	bool completed_task_2 = false;
+	bool completed_task_3 = false;
+	bool completed_task_4 = false;
+
 	system("cls");
 	int x;
-	std::cout << "Hello! Welcome to weekly 40 assignments, by Erik Holst!" << std::endl;
-
-
 	
-
+	std::cout << "Hello! Welcome to weekly 40 assignments, by Erik Holst!" << std::endl;
+	
 	do
 	{
-		std::cout << "Please select task [1-4]" << std::endl;
-		std::cout << "\nTask [1]: Converts lower case to UPPER CASE using functions and data type char."
-			" \nTask [2]: Board game that let's you move around."
-			" \nTask [3]: Program that takes names and info of max 10 persons."
-			" \nTask [4]: Dice game.\n\nPress [0] to exit" << std::endl;
-
-		std::cin >> x;
-		switch (x) 
+		if (completed_task_1 && completed_task_2 && completed_task_3 && completed_task_4)
 		{
-		case 1:
-			task_1();
-			break;
-		case 2:
-			task_2();
-			break;
-		case 3:
-			task_3();
-			break;
-		case 4:
-			task_4();
-			break;
-		case 0:
-			exit(true);
-			break;
-		default:
-			break;
+			system("cls");
+			std::cout << "Well done, you completed all the tasks!";
+			return (EXIT_SUCCESS);
+
 		}
+		else
+		{
+			system("cls");
+			std::cout << "Please select task [1-4]" << std::endl;
+			std::cout << "\nTask [1]: Converts lower case to UPPER CASE using functions and data type char."
+				" \nTask [2]: Board game that let's you move around."
+				" \nTask [3]: Program that takes names and info of max 10 persons."
+				" \nTask [4]: Dice game.\n\nPress [0] to exit" << std::endl;
+
+			std::cin >> x;
+
+			switch (x)
+			{
+			case 1:
+				task_1();
+				completed_task_1=true;
+				break;
+			case 2:
+				task_2();
+				completed_task_2 = true;
+				break;
+			case 3:
+				task_3();
+				completed_task_3 = true;
+				break;
+			case 4:
+				task_4();
+				completed_task_4 = true;
+				break;
+			case 0:
+				exit(true);
+				break;
+			default:
+				break;
+			}
+		
+
+		}
+		//std::cin.clear();
+		//std::cin.ignore(UINT16_MAX, '\n');
 	} while (true);
 
 }
