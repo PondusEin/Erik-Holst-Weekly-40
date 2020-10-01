@@ -11,10 +11,9 @@ char ch;
 // task 3 global
 struct information
 {
-
 	std::string names;
-	long phonenumber;
-}info[10];
+	long long phonenumber{ 0 };
+};
 
 int amount;
 // task 4 global
@@ -117,32 +116,48 @@ void task_2() {
 void task_3() {
 	system("cls");
 
-	information arrayinfo[10];
+	information info[10];
 
 	std::cout << "How many people would like to store? \nInput: ";
 	std::cin >> amount;
+//	std::cin.ignore();
 
 	for (int i = 1; i < amount+1; i++)
 			{
 			system("cls");
 			std::cout << "Enter person " << i << " name: ";
-				
 			std::cin.ignore(32676, '\n');
-			std::getline(std::cin, info[i].names);
+			std::getline(std::cin, info[i-1].names);
 
 			std::cout << "Enter person " << i << " number: ";
-			std::cin >> info[i].phonenumber;
+
+			std::cin >> info[i-1].phonenumber;
+				while (std::cin.fail())
+				{
+				std::cin.clear();
+				std::cin.ignore(32767, '\n');
+				std::cin >> info[i - 1].phonenumber;
+				}
+;
 			}
 		system("cls");
 
+		std::cout << "Displaying info\n**************************" << std::endl;
+
 		std::cout << std::endl;
+		for (int i = 1; i <= amount; i++)
+		{
+			std::cout << "Person " << i << " : " << info[i-1].names << std::endl;
+			std::cout << "Person " << i << " : " << info[i-1].phonenumber << std::endl;
+			std::cout << "**************************" << std::endl;
+		}
+
+
 	
-
-
-	std::cout << arrayinfo->names;
-	std::cout << '\n' << "Press any button to return to main menu!";
+	std::cout << '\n' << "Press any button to return to main menu! \n";
 
 	char hello = _getch();
+	system("cls");
 }
 
 void task_4() {
@@ -179,7 +194,7 @@ int main()
 		}
 		else
 		{
-			system("cls");
+
 			std::cout << "Please select task [1-4]" << std::endl;
 			std::cout << "\nTask [1]: Converts lower case to UPPER CASE using functions and data type char."
 				" \nTask [2]: Board game that let's you move around."
@@ -210,6 +225,7 @@ int main()
 				exit(true);
 				break;
 			default:
+				system("cls");
 				break;
 			}
 		
