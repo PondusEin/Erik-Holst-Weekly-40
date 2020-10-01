@@ -3,11 +3,18 @@
 #include <vector>
 #include <string>
 #include <limits>
+#include <ctime>
 
 // task 1 global
+	// The char data type has a variable named lc (short for lowercase to see it easily). the string length is to make the for loop work
 char lc[80];
+
 // task 2 global
 char ch;
+int pos;
+
+
+
 // task 3 global
 struct information
 {
@@ -16,14 +23,14 @@ struct information
 };
 
 int amount;
-// task 4 global
 
+
+// task 4 global
 
 
 void task_1() {
 
 	system("cls");
-	// The char data type has a variable named lc (short for lowercase to see it easily). the string length is to make the for loop work
 
 
 	std::cout << "Welcome to task 1. Please write anything you would like"
@@ -39,13 +46,13 @@ void task_1() {
 	std::cin.getline(lc, 80);
 	 
 
-	//std::cout << "running after getline" << std::endl;
+	//std::cout << "running after getline" << std::endl; debug test
 
-	// for each time x is smaller than the lowercase, the following if statement will happen.
+	// for each time i is smaller than the lowercase, the following if statement will happen.
 	for (int i = 0; i < strlen(lc); i++)
 	{
 		
-		// x finds out if the lc is bigger than ascii 97 or smaller than ascii 129, which is lowercase latin
+		// i finds out if the lc is bigger than ascii 97 or smaller than ascii 129, which is lowercase latin
 		if (lc[i] >= 97 && lc[i] <= 129) {
 
 			//when it finds that it's between these ascii numbers, they will convert them to uppercases latin, which is -32 exactly.
@@ -58,7 +65,7 @@ void task_1() {
 	std::cout << lc << std::endl;
 	std::cout << '\n' << "Press any button to return to main menu!";
 
-	char hello=_getch();
+	char goodbye=_getch();
 	system("cls");
 	return;
 }
@@ -66,29 +73,27 @@ void task_1() {
 void task_2() {
 	system("cls");
 
-	std::vector <std::vector<int>> board{ {1,2,3,4,5,6,7,8,9,10},
-							  {11,12,13,14,15,16,17,18,19,20},
-							  {21,22,23,24,25,26,27,28,29,30},
-							  {31,32,33,34,35,36,37,38,39,40},
-							  {41,42,43,44,45,46,47,48,49,50},
-							  {51,52,53,54,55,56,57,58,59,60},
-							  {61,62,63,64,65,66,67,68,69,70},
-							  {71,72,73,74,75,76,77,78,79,80},
-							  {81,82,83,84,85,86,87,88,89,90},
-							  {91,92,93,94,95,96,97,98,99,100} };
+	std::vector <std::vector<int>> board{ 10 };
+
+	int last_pos = board.size() - 1;
+	board[pos] = board[last_pos];
+	board.pop_back();
 
 	for (int i = 0; i < board.size(); i++)
 	{
-		for (int j = 0; j < board.size(); j++)
+		for (int j = 0; j < board.size(); j++) {
+
 			std::cout << "|=|";
+		}
 		std::cout << std::endl;
 	}
 
-	if (_kbhit())
+	
+	do
 	{
-		do
+		if (_kbhit()) _getch();
 		{
-			std::cin.get(ch);
+			//std::cin.get(ch);
 			switch (_getch())
 			{
 			case 'a':
@@ -102,14 +107,22 @@ void task_2() {
 			default:
 				break;
 			}
-		} while (true);
+		} 
 
+	} while (true);
+
+	
+/*	int last_pos = board.size() - 1;
+	board.push_back(board[last_pos]);
+	for (int i = last_pos; i > pos; i--)
+	{
+		board[i] = board[i - 1];
 	}
+	board[pos];*/
+	std::cout << "Press any button to return to main menu!" << '\n';
 
-	std::cout << '\n' << "Press any button to return to main menu!";
-
-	char hello = _getch();
-	return;
+	char goodbye = _getch();
+	system("cls");
 }
 
 void task_3() {
@@ -151,23 +164,22 @@ void task_3() {
 			std::cout << "**************************" << std::endl;
 		}
 
-
-	
 	std::cout << '\n' << "Press any button to return to main menu! \n";
 
-	char hello = _getch();
+	char goodbye = _getch();
 	system("cls");
 }
 
 void task_4() {
 	system("cls");
-
+	srand(time(nullptr));
 
 
 
 	std::cout << '\n' << "Press any button to return to main menu!";
 
-	char hello = _getch();
+	char goodbye = _getch();
+	system("cls");
 }
 
 int main()
