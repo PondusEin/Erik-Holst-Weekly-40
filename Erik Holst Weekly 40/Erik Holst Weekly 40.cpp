@@ -23,10 +23,13 @@ struct information
 };
 
 int amount;
-
+int person;
 
 // task 4 global
-
+void cya() {
+	char goodbye = _getch();
+	system("cls");
+}
 
 void task_1() {
 
@@ -125,6 +128,11 @@ void task_2() {
 	system("cls");
 }
 
+
+void error() {
+	std::cout << "Error, no info found. Try again with [1-" << amount << "]";
+	cya();
+}
 void task_3() {
 	system("cls");
 
@@ -154,20 +162,142 @@ void task_3() {
 			}
 		system("cls");
 
-		std::cout << "Displaying info\n**************************" << std::endl;
-
-		std::cout << std::endl;
 		for (int i = 1; i <= amount; i++)
 		{
-			std::cout << "Person " << i << " : " << info[i-1].names << std::endl;
-			std::cout << "Person " << i << " : " << info[i-1].phonenumber << std::endl;
-			std::cout << "**************************" << std::endl;
+			while (true)
+			{
+				std::cout << "Displaying info\n**************************" << std::endl;
+
+				std::cout << std::endl;
+				std::cout << "Which person would you like to see information about?"
+					"\tPress [0] to return to main menu!\n\nInput: ";
+				std::cin >> person;
+				switch (person)
+				{
+				case 1:
+					std::cout << "Person " << i << " : " << info[i - 1].names << std::endl;
+					std::cout << "Person " << i << " : " << info[i - 1].phonenumber << std::endl;
+					cya();
+					break;
+				case 2:
+					if (amount >= 2)
+					{
+						std::cout << "Person " << i + 1 << " : " << info[i].names << std::endl;
+						std::cout << "Person " << i + 1 << " : " << info[i].phonenumber << std::endl;
+						cya();
+					}
+					else
+					{
+						error();
+					}
+					break;
+
+				case 3:
+					if (amount >= 3)
+					{
+						std::cout << "Person " << i + 2 << " : " << info[i + 1].names << std::endl;
+						std::cout << "Person " << i + 2 << " : " << info[i + 1].phonenumber << std::endl;
+						cya();
+					}
+					else
+					{
+						error();
+					}
+					break;
+				case 4:
+					if (amount >= 4)
+					{
+						std::cout << "Person " << i + 3 << " : " << info[i + 2].names << std::endl;
+						std::cout << "Person " << i + 3 << " : " << info[i + 2].phonenumber << std::endl;
+						cya();
+					}
+					else
+					{
+						error();
+					}
+					break;
+				case 5:
+					if (amount >=5)
+					{
+						std::cout << "Person " << i + 4 << " : " << info[i + 3].names << std::endl;
+						std::cout << "Person " << i + 4 << " : " << info[i + 3].phonenumber << std::endl;
+						cya();
+					}
+					else
+					{
+						error();
+					}
+					break;
+				case 6:
+					if (amount >= 6)
+					{
+						std::cout << "Person " << i + 5 << " : " << info[i + 4].names << std::endl;
+						std::cout << "Person " << i + 5 << " : " << info[i + 4].phonenumber << std::endl;
+						cya();
+					}
+					else
+					{
+						error();
+					}
+					break;
+				case 7:
+					if (amount >= 7)
+					{
+						std::cout << "Person " << i + 6 << " : " << info[i + 5].names << std::endl;
+						std::cout << "Person " << i + 6 << " : " << info[i + 5].phonenumber << std::endl;
+						cya();
+					}
+					else
+					{
+						error();
+					}
+					break;
+				case 8:
+					if (amount >= 8)
+					{
+
+						std::cout << "Person " << i + 7 << " : " << info[i + 6].names << std::endl;
+						std::cout << "Person " << i + 7 << " : " << info[i + 6].phonenumber << std::endl;
+						cya();
+					}
+					else
+					{
+						error();
+					}
+					break;
+				case 9:
+					if (amount >= 9)
+					{
+						std::cout << "Person " << i + 8 << " : " << info[i + 7].names << std::endl;
+						std::cout << "Person " << i + 8 << " : " << info[i + 7].phonenumber << std::endl;
+						cya();
+					}
+					else
+					{
+						error();
+					}
+					break;
+				case 10:
+					if (amount >= 10)
+					{
+						std::cout << "Person " << i + 9 << " : " << info[i + 8].names << std::endl;
+						std::cout << "Person " << i + 9 << " : " << info[i + 8].phonenumber << std::endl;
+						cya();
+					}
+					else
+					{
+						error();
+					}
+					break;
+				case 0:
+					system("cls");
+					return;
+				default:
+					error();
+					break;
+				}	
+			}
 		}
-
-	std::cout << '\n' << "Press any button to return to main menu! \n";
-
-	char goodbye = _getch();
-	system("cls");
 }
 
 void task_4() {
