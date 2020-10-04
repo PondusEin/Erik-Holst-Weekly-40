@@ -4,15 +4,28 @@
 #include <string>
 #include <limits>
 #include <ctime>
+#include <Windows.h>
 
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+#define KEY_ESC 27
+#define KEY_W 0x57
+#define KEY_A 0x41
+#define KEY_S 0x53
+#define KEY_D 0x44
+#define VK_CAPITAL 0x14
+#define KEYEVENTF_EXTENDEDKEY 0x0001
 // task 1 global
 	// The char data type has a variable named lc (short for lowercase to see it easily). the string length is to make the for loop work
 char lc[80];
 
 // task 2 global
-char ch;
-int pos;
 
+int input = 0;
+int posX = 0, posY = 0;
+char player = { 1 };
 
 
 // task 3 global
@@ -75,53 +88,55 @@ void task_1() {
 
 void task_2() {
 	system("cls");
-
+	
 	std::vector <std::vector<int>> board{ 10 };
 
-	int last_pos = board.size() - 1;
-	board[pos] = board[last_pos];
-	board.pop_back();
 
-	for (int i = 0; i < board.size(); i++)
-	{
-		for (int j = 0; j < board.size(); j++) {
 
-			std::cout << "|=|";
-		}
-		std::cout << std::endl;
-	}
 
-	
-	do
-	{
-		if (_kbhit()) _getch();
+	while (input != KEY_ESC) {
+
+		board[posX][posY] = player;
+		for (int i = 0; i < board.size(); i++)
 		{
-			//std::cin.get(ch);
-			switch (_getch())
-			{
-			case 'a':
-				break;
-			case 's':
-				break;
-			case 'd':
-				break;
-			case 'w':
-				break;
-			default:
-				break;
+			for (int j = 0; j < board.size(); j++) {
+
+				std::cout << '-';
 			}
-		} 
+			std::cout << std::endl;
+		}
 
-	} while (true);
+		input = _getch();
+		keybd_event(VK_CAPITAL, 0, KEYEVENTF_EXTENDEDKEY | 0,0);
+		int prevPosX = posX;
+		int prevPosY = posY;
+		unsigned char space = { '-' };
 
+		switch (input)
+		{
+		case KEY_W:
+			posY--;
+			board[prevPosX][prevPosY] = space;
+			break;
+		case KEY_A:
+			posX--;
+			board[prevPosX][prevPosY] = space;
+			break;
+		case KEY_D:
+			posX++;
+			board[prevPosX][prevPosY] = space;
+			break;
+		case KEY_S:
+			posY++;
+			board[prevPosX][prevPosY] = space;
+			break;
+		default:
+			break;
+		}
+	} 
 	
-/*	int last_pos = board.size() - 1;
-	board.push_back(board[last_pos]);
-	for (int i = last_pos; i > pos; i--)
-	{
-		board[i] = board[i - 1];
-	}
-	board[pos];*/
+	
+	
 	std::cout << "Press any button to return to main menu!" << '\n';
 
 	char goodbye = _getch();
