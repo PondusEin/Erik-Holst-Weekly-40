@@ -23,11 +23,12 @@ The string length is to make the for loop work*/
 char lc[80];
 
 // task 2 global
+const char WIDTH = 10, HEIGHT = 10;
+unsigned char player = { 1 };
+int posX = 1, posY = 1;
+char input;
 
-int input = 0;
-int posX = 0, posY = 0;
-char player = { 1 };
-unsigned char space = { 32 };
+void playerAction();
 
 // task 3 global
 struct information
@@ -91,22 +92,9 @@ void task_1() {
 	return;
 }
 
-void printboard(std::vector <std::vector<int>> board) {
-	system("cls");
-	for (int i = 0; i < board.size(); i++)
-	{
-		for (int j = 0; j < board.size(); j++)
 
-
-			std::cout << std::endl;
-	}
-}
-
-void task_2() {
-	system("cls");
-	
-	std::vector <std::vector<int>> board{
-		{'-','/','/','/','/','/','-','-','-','\\' },
+unsigned char board[WIDTH][HEIGHT] = {
+			{'-','/','/','/','/','/','-','-','-','\\' },
 		{'-','-','-','-','-','-','-','-','-','-' },
 		{'/','-','-','\\','-','-','-','-','-','-' },
 		{'-','/','-','\\','-','-','-','-','-','-' },
@@ -116,39 +104,28 @@ void task_2() {
 		{'G','/','-','-','-','-','-','-','-','-' },
 		{'\\','/','-','-','-','-','-','-','-','>' },
 		{'-','-','/','/','/','/','/','/','/','>' },
-	};
+};
 
-	while (input != KEY_ESC) {
+void playerAction() {
 
-		std::cout << "Move your player using WASD." << std::endl;
-		std::cout << std::endl;
-
-		do
-		{
-			input = _getch();
-		} while (input != KEY_W && input != KEY_A && input != KEY_S && input != KEY_D);
-		
-
-		input = _getch();
-		keybd_event(VK_CAPITAL, 0, KEYEVENTF_EXTENDEDKEY | 0,0);
-		long prevPosX = posX;
-		long prevPosY = posY;
-		unsigned char space = { '-' };
+	long long prevPosX = posX;
+	long long prevPosY = posY;
+	unsigned char space = { 32 };
 
 		switch (input)
 		{
-		case KEY_W:
-			if (board [posX][posY-1] !='\\' && '/')
+		case 'w':
+			if (board[posX][posY - 1] != '\\' && '/')
 			{
 				posY--;
 
-			std::cout << posX << ',' << posY << std::endl;
-			board[prevPosX][prevPosY] = space;
+				std::cout << posX << ',' << posY << std::endl;
+				board[prevPosX][prevPosY] = space;
 			}
 			system("cls");
 			break;
-		case KEY_A:
-			if (board[posX+1][posY] != '\\' && '/')
+		case 'a':
+			if (board[posX + 1][posY] != '\\' && '/')
 			{
 				posX++;
 
@@ -156,8 +133,8 @@ void task_2() {
 				board[prevPosX][prevPosY] = space;
 			}
 			system("cls");
-		case KEY_D:
-			if (board[posX-1][posY] != '\\' && '/')
+		case 'd':
+			if (board[posX - 1][posY] != '\\' && '/')
 			{
 				posX--;
 
@@ -167,7 +144,7 @@ void task_2() {
 			system("cls");
 			board[prevPosX][prevPosY] = space;
 			break;
-		case KEY_S:
+		case 's':
 			if (board[posX][posY + 1] != '\\' && '/')
 			{
 				posY++;
@@ -181,7 +158,33 @@ void task_2() {
 			std::cout << "Incorrect move!" << std::endl;
 			break;
 		}
+	
+}
+
+void task_2() {
+	system("cls");
+
+	
+
+	while (input != KEY_ESC) {
+	
+
+		std::cout << "Move your player using WASD." << std::endl;
+		std::cout << std::endl;
+
+		board[posX][posY] = player;
+
+		for (int y=0; y < HEIGHT; y++)
+		{
+			std::cout << std::endl;
+			for (int x = 0; x < WIDTH; x++) {
+
+				std::cout << board[y][x];
+			}
+		}
+		playerAction();
 	} 
+
 	std::cout << "Press any button to return to main menu!" << '\n';
 
 	cya();
