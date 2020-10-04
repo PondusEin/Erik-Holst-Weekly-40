@@ -99,10 +99,10 @@ void task_2() {
 		board[posX][posY] = player;
 		for (int i = 0; i < board.size(); i++)
 		{
-			for (int j = 0; j < board.size(); j++) {
+			for (int j = 0; j < board.size(); j++) 
 
 				std::cout << '-';
-			}
+			
 			std::cout << std::endl;
 		}
 
@@ -134,9 +134,6 @@ void task_2() {
 			break;
 		}
 	} 
-	
-	
-	
 	std::cout << "Press any button to return to main menu!" << '\n';
 
 	char goodbye = _getch();
@@ -317,9 +314,15 @@ void task_3() {
 
 void task_4() {
 	system("cls");
-	srand(time(nullptr));
-
-
+	std::cout << "d1 " << "d2 " << "d3 " << "d4 " << "d5 " << std::endl;
+	do
+	{
+		for (int x = 1; x < 6; x++)
+		{
+			std::cout << 1 + (rand() % 6) << "  ";
+		}
+		std::cout << std::endl;
+	} while (input != 'h');
 
 	std::cout << '\n' << "Press any button to return to main menu!";
 
@@ -329,6 +332,7 @@ void task_4() {
 
 int main()
 {
+	srand(time(nullptr));
 	// bool task to finish the "showthrough" of the weekly task
 	bool completed_task_1 = false;
 	bool completed_task_2 = false;
