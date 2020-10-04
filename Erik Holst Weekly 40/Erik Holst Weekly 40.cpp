@@ -18,7 +18,8 @@
 #define VK_CAPITAL 0x14
 #define KEYEVENTF_EXTENDEDKEY 0x0001
 // task 1 global
-	// The char data type has a variable named lc (short for lowercase to see it easily). the string length is to make the for loop work
+/* The char data type has a variable named lc (short for lowercase to see it easily). 
+The string length is to make the for loop work*/
 char lc[80];
 
 // task 2 global
@@ -26,7 +27,7 @@ char lc[80];
 int input = 0;
 int posX = 0, posY = 0;
 char player = { 1 };
-
+unsigned char space = { 32 };
 
 // task 3 global
 struct information
@@ -39,6 +40,11 @@ int amount;
 int person;
 
 // task 4 global
+char h;
+char s;
+int diceroll = 0;
+
+// Global general
 void cya() {
 	char goodbye = _getch();
 	system("cls");
@@ -81,63 +87,105 @@ void task_1() {
 	std::cout << lc << std::endl;
 	std::cout << '\n' << "Press any button to return to main menu!";
 
-	char goodbye=_getch();
-	system("cls");
+	cya();
 	return;
+}
+
+void printboard(std::vector <std::vector<int>> board) {
+	system("cls");
+	for (int i = 0; i < board.size(); i++)
+	{
+		for (int j = 0; j < board.size(); j++)
+
+
+			std::cout << std::endl;
+	}
 }
 
 void task_2() {
 	system("cls");
 	
-	std::vector <std::vector<int>> board{ 10 };
-
-
-
+	std::vector <std::vector<int>> board{
+		{'-','/','/','/','/','/','-','-','-','\\' },
+		{'-','-','-','-','-','-','-','-','-','-' },
+		{'/','-','-','\\','-','-','-','-','-','-' },
+		{'-','/','-','\\','-','-','-','-','-','-' },
+		{'\\ ',' ',' ','\\','-','-','-','-','-','-' },
+		{'-','/','\\','\\','-','-','-','-','-','/' },
+		{'/',' ','-','-','-','-','-','-','-','>' },
+		{'G','/','-','-','-','-','-','-','-','-' },
+		{'\\','/','-','-','-','-','-','-','-','>' },
+		{'-','-','/','/','/','/','/','/','/','>' },
+	};
 
 	while (input != KEY_ESC) {
 
-		board[posX][posY] = player;
-		for (int i = 0; i < board.size(); i++)
-		{
-			for (int j = 0; j < board.size(); j++) 
+		std::cout << "Move your player using WASD." << std::endl;
+		std::cout << std::endl;
 
-				std::cout << '-';
-			
-			std::cout << std::endl;
-		}
+		do
+		{
+			input = _getch();
+		} while (input != KEY_W && input != KEY_A && input != KEY_S && input != KEY_D);
+		
 
 		input = _getch();
 		keybd_event(VK_CAPITAL, 0, KEYEVENTF_EXTENDEDKEY | 0,0);
-		int prevPosX = posX;
-		int prevPosY = posY;
+		long prevPosX = posX;
+		long prevPosY = posY;
 		unsigned char space = { '-' };
 
 		switch (input)
 		{
 		case KEY_W:
-			posY--;
+			if (board [posX][posY-1] !='\\' && '/')
+			{
+				posY--;
+
+			std::cout << posX << ',' << posY << std::endl;
 			board[prevPosX][prevPosY] = space;
+			}
+			system("cls");
 			break;
 		case KEY_A:
-			posX--;
-			board[prevPosX][prevPosY] = space;
-			break;
+			if (board[posX+1][posY] != '\\' && '/')
+			{
+				posX++;
+
+				std::cout << posX << ',' << posY << std::endl;
+				board[prevPosX][prevPosY] = space;
+			}
+			system("cls");
 		case KEY_D:
-			posX++;
+			if (board[posX-1][posY] != '\\' && '/')
+			{
+				posX--;
+
+				std::cout << posX << ',' << posY << std::endl;
+				board[prevPosX][prevPosY] = space;
+			}
+			system("cls");
 			board[prevPosX][prevPosY] = space;
 			break;
 		case KEY_S:
-			posY++;
-			board[prevPosX][prevPosY] = space;
+			if (board[posX][posY + 1] != '\\' && '/')
+			{
+				posY++;
+
+				std::cout << posX << ',' << posY << std::endl;
+				board[prevPosX][prevPosY] = space;
+			}
+			system("cls");
 			break;
 		default:
+			std::cout << "Incorrect move!" << std::endl;
 			break;
 		}
 	} 
 	std::cout << "Press any button to return to main menu!" << '\n';
 
-	char goodbye = _getch();
-	system("cls");
+	cya();
+	return;
 }
 
 
@@ -145,6 +193,7 @@ void error() {
 	std::cout << "Error, no info found. Try again with [1-" << amount << "]";
 	cya();
 }
+
 void task_3() {
 	system("cls");
 
@@ -155,24 +204,23 @@ void task_3() {
 //	std::cin.ignore();
 
 	for (int i = 1; i < amount+1; i++)
-			{
-			system("cls");
-			std::cout << "Enter person " << i << " name: ";
-			std::cin.ignore(32676, '\n');
-			std::getline(std::cin, info[i-1].names);
+	{
+	system("cls");
+	std::cout << "Enter person " << i << " name: ";
+	std::cin.ignore(32676, '\n');
+	std::getline(std::cin, info[i-1].names);
 
-			std::cout << "Enter person " << i << " number: ";
+	std::cout << "Enter person " << i << " number: ";
 
-			std::cin >> info[i-1].phonenumber;
-				while (std::cin.fail())
-				{
-				std::cin.clear();
-				std::cin.ignore(32767, '\n');
-				std::cin >> info[i - 1].phonenumber;
-				}
-;
-			}
-		system("cls");
+	std::cin >> info[i-1].phonenumber;
+		while (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(32767, '\n');
+			std::cin >> info[i - 1].phonenumber;
+		};
+	}
+	system("cls");
 
 		for (int i = 1; i <= amount; i++)
 		{
@@ -314,25 +362,41 @@ void task_3() {
 
 void task_4() {
 	system("cls");
+	std::cout << "Dice roll game. Press 'S' to start. Press 'H' to stop the roll. Press [0] to exit." << std::endl;
+	std::cin >> s;
 	std::cout << "d1 " << "d2 " << "d3 " << "d4 " << "d5 " << std::endl;
-	do
+	
+	if (s)
 	{
-		for (int x = 1; x < 6; x++)
+		do
 		{
-			std::cout << 1 + (rand() % 6) << "  ";
-		}
-		std::cout << std::endl;
-	} while (input != 'h');
+			for (int diceroll = 1; diceroll < 6; diceroll++)
+			{
+				std::cout << 1 + (rand() % 6) << "  ";
+			}
+			std::cout << std::endl;
+			if (input != h)
+			{
+				++diceroll;
+			}
+			else if (input = h)
+			{
+				break;
+			}
+		} while (true);
+	}
+	if (0)
+	{
+		std::cout << '\n' << "Press any button to return to main menu!";
 
-	std::cout << '\n' << "Press any button to return to main menu!";
-
-	char goodbye = _getch();
-	system("cls");
+		cya();
+		return;
+	}
 }
 
 int main()
 {
-	srand(time(nullptr));
+	srand(time(0));
 	// bool task to finish the "showthrough" of the weekly task
 	bool completed_task_1 = false;
 	bool completed_task_2 = false;
