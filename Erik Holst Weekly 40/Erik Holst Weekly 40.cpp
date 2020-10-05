@@ -57,9 +57,6 @@ void task_1() {
 
 	// getline so that you can write a whole sentence, and not a single word.
 	std::cin.getline(lc, 80);
-	 
-
-	//std::cout << "running after getline" << std::endl; debug test
 
 	// for each time i is smaller than the lowercase, the following if statement will happen.
 	for (int i = 0; i < strlen(lc); i++)
@@ -72,16 +69,12 @@ void task_1() {
 			//found out you can't write this in norwegian. Don't write in norwegian to make it work.
 			lc[i] = lc[i] - 32;
 		}
-
 	}
-	
 	std::cout << lc << std::endl;
 	std::cout << '\n' << "Press any button to return to main menu!";
-
 	cya();
 	return;
 }
-
 
 unsigned char board[WIDTH][HEIGHT] = {
 		{'-','-','-','-','-','-','-','-','-','/' },
@@ -105,35 +98,25 @@ void playerAction() {
 		switch (input)
 		{
 		case 'W': case 'w':
-			
 				posX--;
-			
 			system("cls");
 			break;
 		case 'A': case 'a':
-			
 				posY--;
-			
 			system("cls");
 			break;
 		case 'D': case 'd':
-			
 				posY++;
-			
 			system("cls");
 			break;
 		case 'S': case 's':
-			
 				posX++;
-			
 			system("cls");
 			break;
 		default:
 			std::cout << "Incorrect move!" << std::endl;
 			break;
 		}
-
-//		std::cout << posX << ',' << posY << std::endl;
 	board[prevPosX][prevPosY] = '-';
 }
 
@@ -141,8 +124,6 @@ void task_2() {
 	system("cls");
 
 	while (input != KEY_ESC) {
-	
-
 		std::cout << "Move your player using WASD." << std::endl;
 		std::cout << std::endl;
 
@@ -158,7 +139,6 @@ void task_2() {
 		}
 
 		playerAction();
-
 		if (board[posX][posY] != '-')
 		{
 			if (board[posX][posY] == '/')
@@ -191,15 +171,12 @@ void task_2() {
 		{
 			posX = 0;
 		}
-
 	} 
-
 	std::cout << "Press any button to return to main menu!" << '\n';
 
 	cya();
 	return;
 }
-
 
 void error() {
 	std::cout << "Error, no info found. Try again with [1-" << amount << "]";
@@ -436,7 +413,6 @@ void task_4() {
 			for (int i = 0; i < Playing.size(); i++)	//print rolled dice
 			{
 				std::cout << "Dice[" << i+1 << "] : " << Playing.at(i) << '\n';
-
 			}
 
 			std::cout << "Dice kept: ";
@@ -451,7 +427,6 @@ void task_4() {
 			if (input == 'r' || input == 'R'){
 				break;
 			}
-
 			if (input == 'h' || input == 'H')
 			{
 				system("cls");
@@ -467,7 +442,6 @@ void task_4() {
 				finishedDice = true;
 				break;
 			}
-
 			switch (input)
 			{
 				case '1':
@@ -510,9 +484,7 @@ void task_4() {
 					system("pause");
 					break;
 			}
-
 		}
-
 		if (finishedDice == true){
 			finishedDice = false;
 			break;
