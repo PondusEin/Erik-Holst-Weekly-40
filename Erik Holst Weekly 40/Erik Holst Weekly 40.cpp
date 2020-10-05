@@ -5,18 +5,10 @@
 #include <limits>
 #include <ctime>
 #include <Windows.h>
+#include <algorithm>
 
-#define KEY_UP 72
-#define KEY_DOWN 80
-#define KEY_LEFT 75
-#define KEY_RIGHT 77
 #define KEY_ESC 27
-#define KEY_W 0x57
-#define KEY_A 0x41
-#define KEY_S 0x53
-#define KEY_D 0x44
-#define VK_CAPITAL 0x14
-#define KEYEVENTF_EXTENDEDKEY 0x0001
+
 // task 1 global
 /* The char data type has a variable named lc (short for lowercase to see it easily). 
 The string length is to make the for loop work*/
@@ -41,9 +33,7 @@ int amount;
 int person;
 
 // task 4 global
-char h;
-char s;
-int diceroll = 0;
+bool finishedDice;
 
 // Global general
 void cya() {
@@ -94,16 +84,16 @@ void task_1() {
 
 
 unsigned char board[WIDTH][HEIGHT] = {
-			{'-','/','/','/','/','/','-','-','-','\\' },
+			{'-','-','-','-','-','-','-','-','-','-' },
 		{'-','-','-','-','-','-','-','-','-','-' },
-		{'/','-','-','\\','-','-','-','-','-','-' },
-		{'-','/','-','\\','-','-','-','-','-','-' },
-		{'\\ ',' ',' ','\\','-','-','-','-','-','-' },
-		{'-','/','\\','\\','-','-','-','-','-','/' },
-		{'/',' ','-','-','-','-','-','-','-','>' },
-		{'G','/','-','-','-','-','-','-','-','-' },
-		{'\\','/','-','-','-','-','-','-','-','>' },
-		{'-','-','/','/','/','/','/','/','/','>' },
+		{'-','-','-','-','-','-','-','-','-','-' },
+		{'-','/','-','-','-','-','-','-','-','-' },
+		{'-','-','-','-','-','-','-','-','-','-' },
+		{'-','-','\\','-','-','-','-','-','-','-' },
+		{'-','-','-','-','-','-','-','-','-','-' },
+		{'G','-','-','-','-','-','-','-','-','-' },
+		{'-','-','-','-','-','-','-','-','-','-' },
+		{'-','-','-','-','-','-','-','-','-','-' },
 };
 
 void playerAction() {
@@ -111,60 +101,44 @@ void playerAction() {
 	long long prevPosX = posX;
 	long long prevPosY = posY;
 	unsigned char space = { 32 };
-
+	input = _getch();
 		switch (input)
 		{
-		case 'w':
-			if (board[posX][posY - 1] != '\\' && '/')
-			{
-				posY--;
-
-				std::cout << posX << ',' << posY << std::endl;
-				board[prevPosX][prevPosY] = space;
-			}
-			system("cls");
-			break;
-		case 'a':
-			if (board[posX + 1][posY] != '\\' && '/')
-			{
-				posX++;
-
-				std::cout << posX << ',' << posY << std::endl;
-				board[prevPosX][prevPosY] = space;
-			}
-			system("cls");
-		case 'd':
-			if (board[posX - 1][posY] != '\\' && '/')
-			{
+		case 'W': case 'w':
+			
 				posX--;
-
-				std::cout << posX << ',' << posY << std::endl;
-				board[prevPosX][prevPosY] = space;
-			}
+			
 			system("cls");
-			board[prevPosX][prevPosY] = space;
 			break;
-		case 's':
-			if (board[posX][posY + 1] != '\\' && '/')
-			{
+		case 'A': case 'a':
+			
+				posY--;
+			
+			system("cls");
+			break;
+		case 'D': case 'd':
+			
 				posY++;
-
-				std::cout << posX << ',' << posY << std::endl;
-				board[prevPosX][prevPosY] = space;
-			}
+			
+			system("cls");
+			break;
+		case 'S': case 's':
+			
+				posX++;
+			
 			system("cls");
 			break;
 		default:
 			std::cout << "Incorrect move!" << std::endl;
 			break;
 		}
-	
+
+//		std::cout << posX << ',' << posY << std::endl;
+	board[prevPosX][prevPosY] = '-';
 }
 
 void task_2() {
 	system("cls");
-
-	
 
 	while (input != KEY_ESC) {
 	
@@ -182,7 +156,42 @@ void task_2() {
 				std::cout << board[y][x];
 			}
 		}
+
 		playerAction();
+
+		if (board[posX][posY] != '-')
+		{
+			if (board[posX][posY] == '/')
+			{
+				posX++;
+			}
+			else if (board[posX][posY] == '\\')
+			{
+				posX--;
+			}
+			else if (board[posX][posY] == 'G')
+			{
+				std::cout << "You win! Well done! ";
+				break;
+			}
+		}
+		if (posY < 0)
+		{
+			posY = 9;
+		}
+		if (posY > 9)
+		{
+			posY = 0;
+		}
+		if (posX < 0)
+		{
+			posX = 9;
+		}
+		if (posX > 9)
+		{
+			posX = 0;
+		}
+
 	} 
 
 	std::cout << "Press any button to return to main menu!" << '\n';
@@ -363,43 +372,48 @@ void task_3() {
 		}
 }
 
+void diceRoll(std::vector<int> &array) {
+	for (int i = 0; i < array.size(); i++)
+	{
+		array.at(i) = rand() % 6 + 1;
+		std::cout << array.at(i) << ' ';
+	}
+}
+
+
 void task_4() {
 	system("cls");
-	std::cout << "Dice roll game. Press 'S' to start. Press 'H' to stop the roll. Press [0] to exit." << std::endl;
-	std::cin >> s;
-	std::cout << "d1 " << "d2 " << "d3 " << "d4 " << "d5 " << std::endl;
-	
-	if (s)
+	srand(static_cast <unsigned int >(std::time(nullptr)));
+	finishedDice = false;
+	std::vector<int> Playing(5);
+	std::vector<int> keptDice{};
+	std::cout << "Dice roll game. Press 'R' to roll. Press [0] to exit." << std::endl;
+	//std::cout << "d1 " << "d2 " << "d3 " << "d4 " << "d5 " << std::endl;
+	input=_getch();
+	while (true)
 	{
-		do
+		while (input != 'h' && input != 'H')
 		{
-			for (int diceroll = 1; diceroll < 6; diceroll++)
+			system("cls");
+			if (input == 'r' || input == 'R')
 			{
-				std::cout << 1 + (rand() % 6) << "  ";
+				diceRoll(Playing);
+				input = ' ';
 			}
-			std::cout << std::endl;
-			if (input != h)
-			{
-				++diceroll;
-			}
-			else if (input = h)
-			{
-				break;
-			}
-		} while (true);
+			std::cout << "\nPress 'H' to keep dice \nPress 'R' to reroll dice";
+			input = _getch();
+		}
 	}
-	if (0)
-	{
-		std::cout << '\n' << "Press any button to return to main menu!";
 
-		cya();
-		return;
-	}
+	
+	std::cout << '\n' << "Press any button to return to main menu!";
+
+	cya();
+	return;
 }
 
 int main()
 {
-	srand(time(0));
 	// bool task to finish the "showthrough" of the weekly task
 	bool completed_task_1 = false;
 	bool completed_task_2 = false;
@@ -455,11 +469,8 @@ int main()
 				system("cls");
 				break;
 			}
-		
-
 		}
 		//std::cin.clear();
 		//std::cin.ignore(UINT16_MAX, '\n');
 	} while (true);
-
 }
