@@ -16,8 +16,8 @@ char lc[80];
 
 // task 2 global
 const char WIDTH = 10, HEIGHT = 10;
-unsigned char player = { 1 };
-int posX = 1, posY = 1;
+unsigned char player = { 64 };
+int posX = 0, posY = 0;
 char input;
 
 void playerAction();
@@ -84,15 +84,15 @@ void task_1() {
 
 
 unsigned char board[WIDTH][HEIGHT] = {
-			{'-','-','-','-','-','-','-','-','-','-' },
-		{'-','-','-','-','-','-','-','-','-','-' },
-		{'-','-','-','-','-','-','-','-','-','-' },
-		{'-','/','-','-','-','-','-','-','-','-' },
-		{'-','-','-','-','-','-','-','-','-','-' },
+		{'-','-','-','-','-','-','-','-','-','/' },
 		{'-','-','\\','-','-','-','-','-','-','-' },
-		{'-','-','-','-','-','-','-','-','-','-' },
-		{'G','-','-','-','-','-','-','-','-','-' },
-		{'-','-','-','-','-','-','-','-','-','-' },
+		{'-','\\','-','/','-','-','-','-','-','\\' },
+		{'-','-','/','-','-','-','-','-','-','-' },
+		{'-','\\','-','\\','-','-','-','-','-','-' },
+		{'-','-','\\','G','\\','-','-','-','-','/' },
+		{'-','/','-','/','-','-','-','-','-','-' },
+		{'-','-','/','-','-','G','-','-','-','-' },
+		{'-','\\','-','/','-','-','-','-','\\','-' },
 		{'-','-','-','-','-','-','-','-','-','-' },
 };
 
@@ -372,6 +372,34 @@ void task_3() {
 		}
 }
 
+int diceSixes(std::vector<int> array)
+{
+	int sixes{ 0 };
+	for (int i = 0; i < array.size(); i++)
+	{
+		if (array.at(i) == 6)
+		{
+			sixes++;
+		}
+	}
+	return sixes;
+}
+
+int dicePairs(std::vector<int> array) 
+{
+	int pairs{ 0 };
+	sort(array.begin(), array.end());
+	for (int i = 0; i < array.size(); i++)
+	{	
+		if (i > 0 && array.at(i) == array.at(i-1)) 
+		{
+			pairs++;
+			i++;
+		}
+	}
+	return pairs;
+}
+
 void diceRoll(std::vector<int> &array) {
 	for (int i = 0; i < array.size(); i++)
 	{
@@ -380,22 +408,20 @@ void diceRoll(std::vector<int> &array) {
 	}
 }
 
-
 void task_4() {
 	system("cls");
-	srand(static_cast <unsigned int >(std::time(nullptr)));
+	srand(static_cast <unsigned int>(std::time(nullptr)));
 	finishedDice = false;
 	std::vector<int> Playing(5);
 	std::vector<int> keptDice{};
 	std::cout << "Dice roll game. Press 'R' to roll. Press [0] to exit." << std::endl;
-	//std::cout << "d1 " << "d2 " << "d3 " << "d4 " << "d5 " << std::endl;
 	input=_getch();
 	while (true)
 	{
-		while (input != 'h' && input != 'H')
+		while (input != 'h' && input != 'H')		//press h to break the while loop and go to hold
 		{
 			system("cls");
-			if (input == 'r' || input == 'R')
+			if (input == 'r' || input == 'R')		//press r and the dice will be rolled
 			{
 				diceRoll(Playing);
 				input = ' ';
@@ -403,9 +429,95 @@ void task_4() {
 			std::cout << "\nPress 'H' to keep dice \nPress 'R' to reroll dice";
 			input = _getch();
 		}
-	}
+		while (true)
+		{
+			system("cls");
+			input = ' ';
+			for (int i = 0; i < Playing.size(); i++)	//print rolled dice
+			{
+				std::cout << "Dice[" << i+1 << "] : " << Playing.at(i) << '\n';
 
-	
+			}
+
+			std::cout << "Dice kept: ";
+			for (int i = 0; i < keptDice.size(); i++)
+			{
+				std::cout << keptDice.at(i) << " ";
+			}
+
+			std::cout << "\nPress number [1-" << Playing.size() << "] to hold the dice. Press 'R' to reroll. Press 'H' to see result and exit. \n";
+			input = _getch();
+
+			if (input == 'r' || input == 'R'){
+				break;
+			}
+
+			if (input == 'h' || input == 'H')
+			{
+				system("cls");
+				std::cout << "Numbers you got: ";
+				for	(int i = 0; i < keptDice.size(); i++)
+				{
+					std::cout << keptDice.at(i) << " ";
+				}
+				std::cout << "\nNumber of 6's:   " << diceSixes(keptDice) << std::endl;
+				std::cout << "Amount of pairs: " << dicePairs(keptDice) << std::endl;
+
+				system("pause");
+				finishedDice = true;
+				break;
+			}
+
+			switch (input)
+			{
+				case '1':
+					if (true)
+					{
+						keptDice.push_back(Playing.at(0)); 
+						Playing.erase(Playing.begin());
+					}
+					break;
+				case '2':
+					if (true)
+					{
+						keptDice.push_back(Playing.at(1));
+						Playing.erase(Playing.begin() + 1);
+					}
+					break;
+				case '3':
+					if (true)
+					{
+						keptDice.push_back(Playing.at(2));
+						Playing.erase(Playing.begin() + 2);
+					}
+					break;
+				case '4':
+					if (true)
+					{
+						keptDice.push_back(Playing.at(3));
+						Playing.erase(Playing.begin() + 3);
+					}
+					break;
+				case '5':
+					if (true)
+					{
+						keptDice.push_back(Playing.at(4));
+						Playing.erase(Playing.begin() + 4);
+					}
+					break;
+				default:
+					std::cout << "Please select a value between [1-" << Playing.size() << ']';
+					system("pause");
+					break;
+			}
+
+		}
+
+		if (finishedDice == true){
+			finishedDice = false;
+			break;
+		}
+	}
 	std::cout << '\n' << "Press any button to return to main menu!";
 
 	cya();
